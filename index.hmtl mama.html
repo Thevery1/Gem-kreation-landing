@@ -1,0 +1,99 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gem Kreations, Inc.</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT US</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#catalog">CATALOG</a>
+        <div class="logo">Gem<span>Kreations</span>, Inc.</div>
+        <a href="#contact">CONTACT</a>
+        <a href="#help">HELP</a>
+    </nav>
+
+    <div class="hero" id="home">
+        <h1>Discover Our <span>Journey</span></h1>
+        <p>"TRANSFORMING WORTH BEYOND LIFE'S EXPERIENCES!"</p>
+    </div>
+
+    <div class="about" id="about">
+        <h2>About Us</h2>
+        <p>Gem Kreations isn't just a brand—it's a movement for empowering women everywhere. We aim to inspire women to recognize their strengths, boosting self-worth and confidence from within. Our products and services, focusing on self-care, are designed to nourish body, mind, and soul, motivating women to prioritize their well-being.</p>
+        <img src="https://via.placeholder.com/150" alt="Tina Thornton, Founder & CEO">
+        <p>Tina Thornton, Founder & CEO</p>
+    </div>
+
+    <div class="experience" id="experience">
+        <h2>Gem Experience</h2>
+        <p>Gem Kreations is a beacon of empowerment, a community forged in strength and resilience, dedicated to building worth beyond adversity. We stand as a collective of bold, brilliant individuals who believe in the transformative power of unity and perseverance.</p>
+        <img src="https://via.placeholder.com/150" alt="Gem Experience Logo">
+    </div>
+
+    <div class="contact" id="contact">
+        <h2>Get in Touch & FAQ</h2>
+        <p>Welcome to Gem Kreations! We're thrilled to have you here and eager to connect with you. For any questions, insights, or stories you'd like to share, our digital doors are always open.</p>
+        <form>
+            <input type="email" placeholder="Insert Your E-mail Address" required>
+            <textarea placeholder="Insert Your Message" required></textarea>
+            <button type="submit">Submit Message</button>
+        </form>
+        <div class="social">
+            <p>Connect with us TODAY!</p>
+            <a href="https://www.facebook.com/group">Facebook</a>
+            <a href="https://instagram.com/solerecoveryinc">@solerecoveryinc</a>
+            <a href="https://twitter.com/solerecoveryinc">@solerecoveryinc</a>
+            <a href="https://linkedin.com/tina-thornton-356">LinkedIn</a>
+            <a href="https://youtube.com/thegemxchange">YouTube</a>
+            <a href="https://www.solerecovery.org">Website</a>
+            <a href="mailto:info@solerecovery.org">Email</a>
+            <a href="tel:2055868693">Phone</a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

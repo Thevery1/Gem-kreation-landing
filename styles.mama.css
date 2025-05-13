@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+    background-color: #000;
+}
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+.logo {
+    font-size: 24px;
+    color: #b19cd9;
+    font-style: italic;
+}
+.logo span {
+    color: #ffd700;
+}
+.hero {
+    padding: 50px 0;
+}
+.hero h1 {
+    font-size: 48px;
+    color: #b19cd9;
+}
+.hero h1 span {
+    color: #ffd700;
+}
+.hero p {
+    font-size: 18px;
+    color: #ffd700;
+}
+.about, .experience, .contact {
+    padding: 50px;
+}
+.about img, .experience img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+.contact form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contact input, .contact textarea {
+    width: 300px;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    color: #000;
+}
+.contact button {
+    width: 200px;
+    padding: 10px;
+    background-color: #ffd700;
+    border: none;
+    color: #000;
+    cursor: pointer;
+}
+.social a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
